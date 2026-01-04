@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --color-yellow: #e7d393;
+
 }
 
 @theme inline {
@@ -15,6 +19,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
+    
     --foreground: #ededed;
   }
 }
@@ -23,4 +28,213 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+@layer utilities {
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .col-center{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .abs-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .radial-gradient {
+    background: radial-gradient(circle, #434343 0%, #000 50%, transparent 100%);
+  }
+
+  .masked-img{
+    mask-image: url("/path/to/mask.png");
+    mask-repeat: no-repeat;
+    mask-position: center; 
+    mask-size: 50%;
+  }
+}
+
+@layer components {
+  .main {
+    width: 100%; 
+    overflow-x: hidden;
+  }
+
+  .nav{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+  }
+
+  .nav .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+
+  /* New rules from the screenshot - expanded Tailwind utilities to plain CSS */
+  main {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    z-index: 50;
+    width: 100%;
+  }
+
+  nav > div {  /* Targets the direct div child of nav */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem; /* gap-5 */
+    padding-top: 1.25rem; /* py-5 */
+    padding-bottom: 1.25rem; /* py-5 */
+    padding-left: 1.25rem; /* px-5 */
+    padding-right: 1.25rem; /* px-5 */
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    nav > div {
+      flex-direction: row; /* md:flex-row */
+      justify-content: space-between; /* md:justify-between */
+      padding-left: 0; /* md overrides for px */
+      padding-right: 0; /* md overrides for px */
+    }
+
+    nav a {
+      font-size: 1rem; /* md:text-base */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    nav > div {
+      padding-left: 0; /* lg:px-0 */
+      padding-right: 0; /* lg:px-0 */
+    }
+  }
+
+  nav p {
+    font-family: var(--font-sans);
+    font-size: 1.875rem; /* text-3xl */
+    margin-bottom: -0.5rem; /* -mb-2 */
+  }
+
+  nav a {
+    cursor: pointer;
+    white-space: nowrap; /* text-nowrap */
+    font-size: 0.875rem; /* text-sm */
+  }
+
+  nav ul {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    nav ul {
+      gap: 2rem; /* sm:gap-8 */
+    }
+  }
+
+  .noisy{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    background: url("/noise.png");
+    min-height: 100dvh;
+  }
+
+.hero {                   
+  position: relative;
+  z-index: 10;
+  min-height: 100dvh;     
+  width: 100%;
+  border: transparent;    
+  overflow: hidden;       
+}
+
+.hero h1 {
+  margin-top: 10rem;      
+  font-size: 5.5rem;     
+  line-height: 1;         
+  text-align: center;
+  font-family: "Modern Negra", sans-serif;
+
+  /* Responsive font size: md:text-[20vw] */
+  @media (min-width: 768px) {
+    font-size: 20vw;
+  }
+
+  /* Optional smaller margin on medium screens: md:mt-32 */
+  @media (min-width: 768px) {
+    margin-top: 8rem;     /* mt-32 ≈ 8rem */
+  }
+}
+
+.left-leaf {
+  position: absolute;
+  left: 0;
+  width: 33.333%;      
+  max-width: fit-content; 
+
+  top: -20%;            
+  @media (min-width: 768px) {
+    top: 20%;            
+  }
+  @media (min-width: 1024px) {
+    top: 36%;            
+  }
+  @media (min-width: 1280px) {
+    top: 52%;            
+  }
+
+  bottom: auto;          /* default */
+  @media (min-width: 768px) {
+    bottom: -20%;        /* md:bottom-auto -bottom-20 → pushes down */
+  }
+}
+
+.right-leaf {
+  position: absolute;
+  right: 0;
+  width: 24%;            /* approximate for w-24; adjust if needed */
+  max-width: fit-content;
+
+  /* Responsive top positioning */
+  top: 0;                /* fallback */
+  @media (min-width: 1024px) {
+    top: 0;              /* xl:top-0 */
+  }
+  @media (min-width: 1280px) {
+    top: 12%;            /* 2xl:top-12 */
+  }
+  top: 50%;              /* top-1/2 → 50% */
+  @media (min-width: 768px) {
+    bottom: 0;           /* md:bottom-0 */
+  }
+}
 }
